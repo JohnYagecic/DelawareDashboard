@@ -1,4 +1,7 @@
 
+substrRight <- function(x, n){
+  substr(x, nchar(x)-n+1, nchar(x))
+}
 
 setwd("C:/Users/JohnYagecic/Documents/DelawareDashboard")
 require(animation)
@@ -6,10 +9,11 @@ require(animation)
 PORTS<-read.csv("PORTSstations.csv")
 tideDat<-read.csv("MergedTidalData.csv")
 
-#saveGIF({
   for (yyy in 1:nrow(tideDat)){
     myDate<-format(strptime(tideDat[yyy,2], "%Y-%m-%d %H:%M"),"%m/%d/%Y %H:%M")
     myTitle=paste("Delaware Estuary Water Surface Elevation, ", myDate)
+    
+    png(file=paste0("Rplot",substrRight(paste0("0000", yyy),3),".png"))
     
     plot(PORTS$RiverMile, tideDat[yyy,3:11], type="b", pch=19, col="blue", lwd=3, ylim=c(-1,3),
          xlab="River Miles", ylab="Meters (MLLW)", main=myTitle)
@@ -20,12 +24,12 @@ tideDat<-read.csv("MergedTidalData.csv")
     text(60, 2.9, "Delaware \n Memorial \n Bridge", cex=0.8)
     legend("topleft", legend=c("Predicted", "Observed"), col=c("blue", "red"), pch=19)
   
-    Sys.sleep(0.1)
+    #Sys.sleep(0.1)
+    
+    dev.off()
+    
+    
   
   }
-
-#}, nmax=nrow(tideDat), interval=0.1,
-#  movie.name="TidalWSE.gif",
-#  convert="convert",
-#  ani.width=300, ani.height=300)
-
+oopt=ani.options(interval=0.1)
+im.convert("Rplot*.png", output="tidalWSE.gif")
