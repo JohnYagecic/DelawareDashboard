@@ -31,5 +31,10 @@ tideDat<-read.csv("MergedTidalData.csv")
     
   
   }
+
+ani.options(convert='C:\\Program Files\\ImageMagick-6.9.1-Q16\\convert.exe')
+
 oopt=ani.options(interval=0.1)
 im.convert("Rplot*.png", output="tidalWSE.gif")
+
+
