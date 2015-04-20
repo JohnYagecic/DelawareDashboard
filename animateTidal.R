@@ -12,6 +12,7 @@ tideDat<-read.csv("MergedTidalData.csv")
   for (yyy in 1:nrow(tideDat)){
     myDate<-format(strptime(tideDat[yyy,2], "%Y-%m-%d %H:%M"),"%m/%d/%Y %H:%M")
     myTitle=paste("Delaware Estuary Water Surface Elevation, ", myDate)
+    myTitle=paste(myTitle, "\nData retrieved ", format(Sys.Date(), "%m/%d/%Y"))
     
     png(file=paste0("Rplot",substrRight(paste0("0000", yyy),3),".png"))
     
